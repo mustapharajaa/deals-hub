@@ -1,0 +1,22 @@
+{
+  "searchIntervalMonths": 1,
+  "minDelayMinutes": 30,
+  "maxDelayMinutes": 180,
+  "newSoftware": {
+    "minDelayMinutes": 15,
+    "maxDelayMinutes": 60,
+    "sourceFile": "./new softwers.txt",
+    "searchKeywords": ["coupon code", "discount", "promo code"]
+  },
+  "description": {
+    "searchIntervalMonths": "How often to search each software already in database (1, 2, 3, etc. months)",
+    "minDelayMinutes": "Minimum wait time between automation runs for existing software (in minutes)",
+    "maxDelayMinutes": "Maximum wait time between automation runs for existing software (in minutes)",
+    "newSoftware": {
+      "minDelayMinutes": "Minimum wait time between new software searches (in minutes)",
+      "maxDelayMinutes": "Maximum wait time between new software searches (in minutes)",
+      "sourceFile": "Path to file containing new software names (one per line)",
+      "searchKeywords": "Array of keywords to append to software names (e.g. 'coupon code', 'discount'). Use (2), (3) after software name to select specific keyword."
+    }
+  }
+}

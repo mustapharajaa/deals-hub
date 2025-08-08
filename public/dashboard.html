@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Dashboard - Dynamic Coupon Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .dashboard-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .dashboard-header h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .dashboard-nav {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn.active {
+            background: #764ba2;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .dashboard-section {
+            display: none;
+        }
+
+        .dashboard-section.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .table-header {
+            background: #f8f9fa;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .table-header h3 {
+            color: #333;
+            font-size: 1.3rem;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box input, .search-box select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group-full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        .deal-row {
+            display: grid;
+            grid-template-columns: 2fr 2fr 1fr 1.5fr;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .deal-row:last-child {
+            border-bottom: none;
+        }
+
+        .deal-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .deal-info strong {
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .category-badge {
+            background: #e3f2fd;
+            color: #0d47a1;
+            padding: 0.2rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            width: fit-content;
+        }
+
+        .deal-stats {
+            text-align: center;
+        }
+
+        .click-count {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+        }
+
+        .click-count strong {
+            font-size: 1.2rem;
+            color: #667eea;
+        }
+
+        .click-count small {
+            color: #666;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .deal-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.success {
+            background: #28a745;
+        }
+
+        .notification.error {
+            background: #dc3545;
+        }
+
+        .notification.info {
+            background: #17a2b8;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .deal-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .search-box {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Dashboard Header -->
+    <header class="dashboard-header">
+        <div class="container">
+            <h1>📊 Database Dashboard</h1>
+            <p>Manage your dynamic coupon deals and categories</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="dashboard-nav">
+        <div class="container">
+            <div class="nav-buttons">
+                <button class="nav-btn active" onclick="showSection('overview')">📈 Overview</button>
+                <button class="nav-btn" onclick="showSection('deals')">🎯 Deals</button>
+                <button class="nav-btn" onclick="showSection('categories')">📁 Categories</button>
+                <button class="nav-btn" onclick="showSection('analytics')">📊 Analytics</button>
+                <button class="nav-btn" onclick="showSection('add-deal')">➕ Add Deal</button>
+                <a href="index.html" class="nav-btn" style="text-decoration: none;">🏠 View Site</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="dashboard-container">
+        
+        <!-- Overview Section -->
+        <section id="overview" class="dashboard-section active">
+            <div class="stats-grid" id="stats-grid">
+                <div class="loading">Loading statistics...</div>
+            </div>
+            
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>🔥 Top Performing Deals</h3>
+                    <button class="nav-btn btn-sm" onclick="dashboard.loadDeals()">🔄 Refresh</button>
+                </div>
+                <div id="top-deals">
+                    <div class="loading">Loading top deals...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deals Section -->
+        <section id="deals" class="dashboard-section">
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>All Deals</h3>
+                    <div class="search-box">
+                        <input type="text" id="deals-search" placeholder="Search deals...">
+                        <select id="category-filter">
+                            <option value="">All Categories</option>
+                        </select>
+                        <button class="nav-btn btn-sm" onclick="loadDeals()">🔄 Refresh</button>
+                    </div>
+                </div>
+                <div id="deals-list">
+                    <div class="loading">Loading deals...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section id="categories" class="dashboard-section">
+            <div class="form-container">
+                <h3>➕ Add New Category</h3>
+                <form id="add-category-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="category-name">Category Name:</label>
+                            <input type="text" id="category-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category-description">Description:</label>
+                            <input type="text" id="category-description">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">💾 Add Category</button>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Categories</h3>
+                    <button class="nav-btn btn-sm" onclick="loadCategories()">🔄 Refresh</button>
+                </div>
+                <div id="categories-list">
+                    <div class="loading">Loading categories...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics" class="dashboard-section">
+            <div class="table-container">
+                <div class="table-header">
+                    <h3>Recent Activity</h3>
+                    <button class="nav-btn btn-sm" onclick="loadAnalytics()">🔄 Refresh</button>
+                </div>
+                <div id="analytics-table">
+                    <div class="loading">Loading analytics...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add Deal Section -->
+        <section id="add-deal" class="dashboard-section">
+            <div class="form-container">
+                <h3>➕ Add New Deal</h3>
+                <form id="add-deal-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="software-name">Software Name:</label>
+                            <input type="text" id="software-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category:</label>
+                            <select id="category" required>
+                                <option value="">Select Category</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="discount">Discount:</label>
+                            <input type="text" id="discount" placeholder="e.g., 50% off" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="coupon-code">Coupon Code:</label>
+                            <input type="text" id="coupon-code" placeholder="e.g., SAVE50">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="website-url">Website URL:</label>
+                            <input type="url" id="website-url" placeholder="https://example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="referral-link">Referral Link:</label>
+                            <input type="url" id="referral-link" placeholder="https://example.com?ref=yourcode">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="logo-url">Logo URL:</label>
+                            <input type="url" id="logo-url" placeholder="https://example.com/logo.png">
+                        </div>
+                        <div class="form-group">
+                            <label for="time-limit">Time Limit:</label>
+                            <input type="text" id="time-limit" placeholder="e.g., Limited Time Only">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group form-group-full">
+                        <label for="description">Description:</label>
+                        <textarea id="description" rows="4" placeholder="Describe the software and deal..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-success">💾 Save Deal</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Edit Deal Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>✏️ Edit Deal</h3>
+            <form id="edit-deal-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-software-name">Software Name:</label>
+                        <input type="text" id="edit-software-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-category">Category:</label>
+                        <select id="edit-category" required>
+                            <option value="">Select Category</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-discount">Discount:</label>
+                        <input type="text" id="edit-discount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-coupon-code">Coupon Code:</label>
+                        <input type="text" id="edit-coupon-code">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-website-url">Website URL:</label>
+                        <input type="url" id="edit-website-url">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-referral-link">Referral Link:</label>
+                        <input type="url" id="edit-referral-link">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-logo-url">Logo URL:</label>
+                        <input type="url" id="edit-logo-url">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-time-limit">Time Limit:</label>
+                        <input type="text" id="edit-time-limit">
+                    </div>
+                </div>
+                
+                <div class="form-group form-group-full">
+                    <label for="edit-description">Description:</label>
+                    <textarea id="edit-description" rows="4"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-success">💾 Update Deal</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

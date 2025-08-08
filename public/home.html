@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deal Hub - The Sweetest Discounts & Deals for Entrepreneurs</title>
+    <meta name="description" content="Discover the best software deals and discounts for entrepreneurs. Save money on top tools and services.">
+    <link rel="stylesheet" href="/home-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h2>Deal Hub</h2>
+            </div>
+            <nav class="nav">
+                <a href="/all-deals">All Deals</a>
+                <a href="/blog">Blog</a>
+                <a href="/faq">FAQ</a>
+                <a href="/hire-us">Hire Us</a>
+                <a href="/contact">Contact Us</a>
+            </nav>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><img src="/images/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+                <a href="#" class="social-icon"><img src="/images/x.png" alt="X/Twitter" style="width: 24px; height: 24px;"></a>
+                <a href="#" class="social-icon"><img src="/images/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background">
+            <div class="container">
+                <h1 class="hero-title">The Sweetest Discounts & Deals<br>for Entrepreneurs</h1>
+                <div class="hero-search">
+                    <input type="text" id="search-input" placeholder="Search for software deals..." class="search-input">
+                    <button onclick="searchDeals()" class="search-btn">Get Deals Now</button>
+                </div>
+                <div class="search-results-info" id="search-results-info" style="display: none;">
+                    <p id="search-results-text"></p>
+                    <button onclick="clearSearch()" class="clear-search-btn">Show All Deals</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Deals -->
+    <section class="featured-deals">
+        <div class="container">
+            <h2 class="section-title" id="deals-section-title">Featured Deals</h2>
+            <div class="deals-grid" id="featured-deals">
+                <!-- Deals will be loaded dynamically -->
+            </div>
+            <div class="no-results" id="no-results" style="display: none;">
+                <h3>No software found</h3>
+                <p>Try different search terms or browse our categories below.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Categories -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Top Categories</h2>
+            <div class="categories-grid">
+                <div class="category-circle" onclick="browseCategory('Health')">
+                    <div class="category-icon">❤️</div>
+                    <div class="category-name">Health</div>
+                </div>
+                <div class="category-circle" onclick="browseCategory('Learning')">
+                    <div class="category-icon">🎓</div>
+                    <div class="category-name">Learning</div>
+                </div>
+                <div class="category-circle" onclick="browseCategory('Marketing')">
+                    <div class="category-icon">📢</div>
+                    <div class="category-name">Marketing</div>
+                </div>
+                <div class="category-circle" onclick="browseCategory('Business')">
+                    <div class="category-icon">🏢</div>
+                    <div class="category-name">Business</div>
+                </div>
+                <div class="category-circle" onclick="browseCategory('Design')">
+                    <div class="category-icon">🎨</div>
+                    <div class="category-name">Design</div>
+                </div>
+                <div class="category-circle" onclick="browseCategory('Development')">
+                    <div class="category-icon">💻</div>
+                    <div class="category-name">Development</div>
+                </div>
+            </div>
+            <div class="view-all-container">
+                <button class="view-all-btn" onclick="viewAllDeals()">View Latest Deals</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Signup -->
+    <section class="newsletter">
+        <div class="container">
+            <h2 class="newsletter-title">Stay updated on sweet deals!</h2>
+            <p class="newsletter-subtitle">You don't want to miss out</p>
+            <div class="newsletter-form">
+                <input type="email" placeholder="Enter your email address" class="email-input" id="email-input">
+                <button class="newsletter-btn" onclick="subscribeNewsletter()">Give Me Free Stuff</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <h2>Deal Hub</h2>
+            </div>
+            <div class="footer-social">
+                <a href="#" class="social-icon"><img src="/images/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+                <a href="#" class="social-icon"><img src="/images/x.png" alt="X/Twitter" style="width: 24px; height: 24px;"></a>
+                <a href="#" class="social-icon"><img src="/images/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
+            </div>
+            <div class="footer-text">
+                © 2025 Made with Love by <span class="highlight">Deal Hub</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/home-script.js"></script>
+</body>
+</html>

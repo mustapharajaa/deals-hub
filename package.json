@@ -1,0 +1,31 @@
+{
+  "name": "dynamic-coupon-database",
+  "version": "1.0.0",
+  "description": "Dynamic coupon page with real database backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "init-db": "node init-database.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "puppeteer": "^24.15.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "coupon",
+    "deals",
+    "database",
+    "seo"
+  ],
+  "author": "",
+  "license": "ISC"
+}

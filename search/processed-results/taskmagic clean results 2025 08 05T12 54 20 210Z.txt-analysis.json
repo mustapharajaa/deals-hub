@@ -1,0 +1,38 @@
+{
+  "filename": "taskmagic-clean-results-2025-08-05T12-54-20-210Z.txt",
+  "software_name": "taskmagic clean results 2025 08 05T12 54 20 210Z.txt",
+  "analyzed_at": "2025-08-05T12:55:44.035Z",
+  "gemini_analysis": {
+    "software_name": "TaskMagic",
+    "best_discount": "88",
+    "coupon_codes": [
+      "SYRUP"
+    ],
+    "description": "AI-powered tool automating web tasks from walkthrough videos.  Creates code-free automations.",
+    "pricing_info": "Free plan, Apps plan ($29/month), Apps + Browser plan ($49/month). Lifetime deals mentioned.",
+    "deal_websites": [
+      "getsyrup.com",
+      "taskmagic.tenereteam.com",
+      "dealspotr.com",
+      "grabhosts.net",
+      "elgrancafeleon.es",
+      "reddit.com",
+      "lifetimedealhub.net",
+      "bestsaasdeal.com",
+      "appsumo.com"
+    ],
+    "key_features": [
+      "code-free automation",
+      "browser recording",
+      "webhooks",
+      "filters",
+      "unlimited apps, steps, workflows"
+    ],
+    "deal_validity": "Limited Time Only, July 2025, August 2025",
+    "special_offers": "Lifetime deals, free plans, 70% off sign-up offers,  extra 10% discount via AppSumo deal, 88% off for a limited time via a special link"
+  },
+  "database_result": {
+    "created": true,
+    "id": 7
+  }
+}

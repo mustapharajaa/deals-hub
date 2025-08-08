@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="{{GOOGLE_VERIFICATION_CODE}}">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="DealHub">
+    <meta name="generator" content="DealHub Dynamic Coupon System">
+    <title>{{PAGE_TITLE}}</title>
+    <meta name="description" content="{{META_DESCRIPTION}}"/>
+    <link rel="canonical" href="{{CANONICAL_URL}}">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website"/>
+    <meta property="og:title" content="{{OG_TITLE}}"/>
+    <meta property="og:description" content="{{OG_DESCRIPTION}}"/>
+    <meta property="og:image" content="{{OG_IMAGE}}"/>
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta property="twitter:title" content="{{TWITTER_TITLE}}"/>
+    <meta property="twitter:description" content="{{TWITTER_DESCRIPTION}}"/>
+    <meta property="twitter:image" content="{{TWITTER_IMAGE}}"/>
+    
+    <!-- Favicon and Icons -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.png">
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    
+    <!-- RSS Feed -->
+    <link href="/rss.xml" rel="alternate" title="DealHub RSS Feed" type="application/rss+xml">
+    
+    <!-- Web Font Loader for optimized font loading -->
+    <script>
+      WebFontConfig = {
+        google: {
+          families: ["Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic", "Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic", "Inconsolata:400,700", "Poppins:300,regular,500,600,700", "Playfair Display:regular,italic,700,700italic,900,900italic:latin-ext,latin"]
+        },
+        active: function() {
+          // All fonts loaded successfully
+          document.documentElement.classList.add('fonts-loaded');
+        },
+        inactive: function() {
+          // Font loading failed, using fallback fonts
+          document.documentElement.classList.add('fonts-failed');
+        },
+        loading: function() {
+          // Fonts are loading
+          document.documentElement.classList.add('fonts-loading');
+        }
+      };
+      
+      (function(d) {
+        var wf = d.createElement('script'), s = d.scripts[0];
+        wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
+        wf.async = true;
+        s.parentNode.insertBefore(wf, s);
+      })(document);
+    </script>
+    
+    <!-- Touch Detection Script (from Syrup) -->
+    <script type="text/javascript">
+        !function(o, c) {
+            var n = c.documentElement
+              , t = " w-mod-";
+            n.className += t + "js",
+            ("ontouchstart"in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch")
+        }(window, document);
+    </script>
+    
+    <link rel="stylesheet" href="/styles.css?v=2">
+    <!-- Icons replaced with Unicode symbols for faster loading -->
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "{{SOFTWARE_NAME}}",
+        "description": "{{SOFTWARE_DESCRIPTION}}",
+        "applicationCategory": "{{SOFTWARE_CATEGORY}}",
+        "offers": {
+            "@type": "Offer",
+            "description": "{{DISCOUNT_TEXT}}",
+            "category": "Software Discount",
+            "availability": "https://schema.org/InStock",
+            "validThrough": "{{EXPIRY_DATE}}"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.5",
+            "ratingCount": "100"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "DealHub",
+            "url": "{{SITE_URL}}"
+        }
+    }
+    </script>
+    
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', '{{GA_TRACKING_ID}}', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h2>DealHub</h2>
+            </div>
+            <nav class="nav">
+                <a href="#deals">All Deals</a>
+                <a href="#blog">Blog</a>
+                <a href="#faq">FAQ</a>
+                <a href="#hire">Hire Us</a>
+                <a href="#contact">Contact Us</a>
+            </nav>
+            <div class="social-icons">
+                <a href="#"><img src="/images/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+                <a href="#"><img src="/images/x.png" alt="X/Twitter" style="width: 24px; height: 24px;"></a>
+                <a href="#"><img src="/images/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="software-logo">
+                    {{SOFTWARE_LOGO_HTML}}
+                    <h2 id="software-name">{{SOFTWARE_NAME_H1}}</h2>
+                </div>
+                <button class="view-website-btn" id="view-website" data-tracker="Deal_ViewWebsite_Click|DealPage">View Website</button>
+                <div class="deal-tags">
+                    <span class="tag" id="category">{{SOFTWARE_CATEGORY}}</span>
+                    <span class="tag" id="discount-tag">{{DISCOUNT_TEXT}}</span>
+                    <span class="tag limited-time" id="time-limit">{{EXPIRY_DATE}}</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deal Details -->
+        <section class="deal-section">
+            <div class="container">
+                <div class="deal-content">
+                    <div class="deal-info">
+                        <h1 id="deal-title">{{DEAL_TITLE}}</h1>
+                        
+                        <div class="deal-meta">
+                            <span class="meta-item">
+                                <span class="icon">🏷️</span>
+                                <span id="category-display">{{SOFTWARE_CATEGORY}}</span>
+                            </span>
+                            <span class="meta-item">
+                                <span class="icon">💰</span>
+                                <span id="discount-display">{{DISCOUNT_TEXT}}</span>
+                            </span>
+                            <span class="meta-item">
+                                <span class="icon">⏰</span>
+                                <span id="expiry-display">{{EXPIRY_DATE}}</span>
+                            </span>
+                            <span class="meta-item">
+                                <span class="icon">📅</span>
+                                <span id="updated-display">Updated Today</span>
+                            </span>
+                        </div>
+
+                        <div class="details-section">
+                            <h3>Details</h3>
+                            <h4 id="software-category">{{CATEGORY_NAME}}</h4>
+                            <p id="software-description">{{SOFTWARE_DESCRIPTION}}</p>
+                        </div>
+
+                        <!-- About Section -->
+                        <div id="about-section" class="about-section">{{ABOUT_SECTION_CONTENT}}</div>
+                    </div>
+
+                    <div class="coupon-section">
+                        <div class="coupon-code-section">
+                            <label>COUPON CODE:</label>
+                            <div class="coupon-code">
+                                <span id="coupon-code">{{COUPON_CODE}}</span>
+                                <button class="copy-btn" onclick="copyCoupon()" data-tracker="Deal_CopyCoupon_Click|DealPage">
+                                    📋
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button class="get-deal-btn" id="get-deal" data-tracker="Deal_GetDeal_Click|DealPage">Get Deal</button>
+                        
+                        <div class="share-section">
+                            <h4>Share This Deal</h4>
+                            <div class="share-buttons">
+                                <a href="#" class="share-btn facebook" onclick="shareOnFacebook(); return false;" title="Share on Facebook" data-tracker="Deal_ShareFacebook_Click|DealPage"><img src="/images/facebook.png" alt="Facebook" style="width: 20px; height: 20px;"></a>
+                                <a href="#" class="share-btn twitter" onclick="shareOnTwitter(); return false;" title="Tweet" data-tracker="Deal_ShareTwitter_Click|DealPage"><img src="/images/x.png" alt="X/Twitter" style="width: 20px; height: 20px;"></a>
+                                <a href="#" class="share-btn linkedin" onclick="shareOnLinkedIn(); return false;" title="Share on LinkedIn" data-tracker="Deal_ShareLinkedIn_Click|DealPage"><img src="/images/linkedin.png" alt="LinkedIn" style="width: 20px; height: 20px;"></a>
+                            </div>
+                        </div>
+
+                        <div class="category-section">
+                            <h4>Category</h4>
+                            <span class="category-badge" id="category-badge">{{CATEGORY_NAME}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Deals Section -->
+        <section id="related-deals-section" class="related-deals-section">
+            <div class="container">
+                <h2 class="related-title">Related Deals</h2>
+                <div id="related-deals-grid" class="related-deals-grid" style="display: flex !important; flex-wrap: nowrap !important; gap: 20px !important; overflow-x: auto !important; scroll-behavior: smooth !important; scroll-snap-type: x mandatory !important; padding: 10px 0 !important; scrollbar-width: thin !important; -webkit-overflow-scrolling: touch !important;">
+                    {{RELATED_DEALS_GRID}}
+                </div>
+            </div>
+        </section>
+
+        <!-- Browse All Deals Section -->
+        <section class="browse-section">
+            <div class="container">
+                <div class="category-display">
+                    <h4>Category</h4>
+                    <span class="category-badge" id="bottom-category">{{BOTTOM_CATEGORY_BADGES}}</span>
+                </div>
+                <button class="browse-all-btn" data-tracker="Deal_BrowseAll_Click|DealPage">Browse All Deals</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <h2>DealHub</h2>
+            </div>
+            <div class="footer-social">
+                <a href="#"><img src="/images/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+                <a href="#"><img src="/images/x.png" alt="X/Twitter" style="width: 24px; height: 24px;"></a>
+                <a href="#"><img src="/images/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
+            </div>
+            <div class="footer-text">
+                <p>&copy; 2024 Made with Love by <span class="highlight">SoFriendly</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Admin Panel (Hidden by default) -->
+    <div class="admin-panel" id="admin-panel">
+        <div class="admin-content">
+            <h3>Update Deal Information</h3>
+            <button class="close-admin" onclick="toggleAdmin()">&times;</button>
+            
+            <form id="deal-form">
+                <div class="form-group">
+                    <label>Software Name:</label>
+                    <input type="text" id="admin-software-name" placeholder="e.g., TaskMagic">
+                </div>
+                
+                <div class="form-group">
+                    <label>Software Logo URL:</label>
+                    <input type="url" id="admin-logo-url" placeholder="https://example.com/logo.png">
+                </div>
+                
+                <div class="form-group">
+                    <label>Website URL:</label>
+                    <input type="url" id="admin-website-url" placeholder="https://taskmagic.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>Discount Percentage:</label>
+                    <input type="text" id="admin-discount" placeholder="e.g., 20% off">
+                </div>
+                
+                <div class="form-group">
+                    <label>Category:</label>
+                    <select id="admin-category">
+                        <option value="Services">Services</option>
+                        <option value="Software">Software</option>
+                        <option value="Tools">Tools</option>
+                        <option value="Automation">Automation</option>
+                        <option value="Productivity">Productivity</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Coupon Code:</label>
+                    <input type="text" id="admin-coupon" placeholder="e.g., SYRUP">
+                </div>
+                
+                <div class="form-group">
+                    <label>Time Limit:</label>
+                    <input type="text" id="admin-time-limit" placeholder="e.g., Limited Time Only">
+                </div>
+                
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea id="admin-description" rows="4" placeholder="Enter software description..."></textarea>
+                </div>
+                
+                <button type="submit" class="update-btn">Update Deal</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Toggle Button (Fixed position) -->
+    <button class="admin-toggle" onclick="toggleAdmin()">
+        ⚙️
+    </button>
+
+    <script src="/app.js"></script>
+    
+    <!-- Enhanced Social Sharing (Syrup-inspired) -->
+    <script>
+        function shareOnFacebook() {
+            const url = encodeURIComponent(document.URL);
+            const title = encodeURIComponent(document.title);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&t=${title}`, '_blank', 'width=600,height=400');
+            return false;
+        }
+        
+        function shareOnTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const softwareName = document.getElementById('software-name')?.textContent || 'Software';
+            const discount = document.getElementById('discount-display')?.textContent || 'Great deal';
+            const text = encodeURIComponent(`${discount} ${softwareName} from @DealHub`);
+            window.open(`https://twitter.com/share?url=${url}&text=${text}&via=DealHub`, '_blank', 'width=600,height=400');
+        }
+        
+        function shareOnLinkedIn() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank', 'width=600,height=400');
+        }
+        
+        // Syrup-style dynamic Twitter sharing
+        document.addEventListener('DOMContentLoaded', function() {
+            const softwareName = document.getElementById('software-name')?.textContent || 'Software';
+            const discount = document.getElementById('discount-display')?.textContent || 'Great deal';
+            const dealUrl = window.location.href;
+            const twitterText = `${discount} ${softwareName} from @DealHub`;
+            const twitterUrl = `https://twitter.com/share?url=${encodeURIComponent(dealUrl)}&text=${encodeURIComponent(twitterText)}&via=DealHub`;
+            
+            // Update Twitter button onclick dynamically
+            const twitterBtn = document.querySelector('.share-btn.twitter');
+            if (twitterBtn) {
+                twitterBtn.setAttribute('onclick', `window.open('${twitterUrl}', '_blank', 'width=600,height=400'); return false;`);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "name": "seo-dynamic-search-automation",
+  "version": "1.0.0",
+  "description": "Automated Google search and Gemini AI analysis for coupon data",
+  "main": "serche-data.js",
+  "scripts": {
+    "start": "node serche-data.js",
+    "scheduler": "node automated-scheduler.js",
+    "gemini": "node gemini-analyzer.js",
+    "install-deps": "npm install"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.2.1",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "sqlite3": "^5.1.6"
+  },
+  "keywords": [
+    "automation",
+    "puppeteer",
+    "gemini-ai",
+    "seo",
+    "coupon-scraping"
+  ],
+  "author": "SEO Dynamic Team",
+  "license": "MIT"
+}

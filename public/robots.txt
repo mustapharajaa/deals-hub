@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: http://localhost:3001/sitemap.xml
+
+# Allow all deal pages
+Allow: /deal/
+Allow: /coupon-code/
+
+# Allow main pages
+Allow: /
+
+# Disallow admin functions (if any)
+Disallow: /api/
+
+# Crawl delay (optional - be nice to servers)
+Crawl-delay: 1
