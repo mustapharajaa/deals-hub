@@ -6,7 +6,7 @@ const path = require('path');
 console.log('🤖 Starting Gemini AI Database Updater...');
 
 // Initialize Gemini AI
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'AIzaSyCTNUxL8jmHLmSo9hNx9LklRHChqOvZ1YI');
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'your gemini api key');
 
 // Database connection with synchronous migration
 let db;
