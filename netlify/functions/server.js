@@ -134,7 +134,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static files
-app.use(express.static(path.join(__dirname, '../../public')));
+app.use(express.static(path.join(process.cwd(), 'public')));
 
 // Helper function to generate fallback SVG images
 function fallbackSvg(softwareName) {
@@ -161,7 +161,7 @@ app.get('/deal/:softwareSlug', async (req, res) => {
             }
 
             // Read template and replace placeholders
-            const templatePath = path.join(__dirname, '../../public', 'index.html');
+            const templatePath = path.join(process.cwd(), 'public', 'index.html');
             let html = fs.readFileSync(templatePath, 'utf8');
             
             const seoTitle = `${deal.discount} Discount on ${deal.software_name} | Coupon Promo Code`;
@@ -197,7 +197,8 @@ app.get('/deal/:softwareSlug', async (req, res) => {
 app.get('/', async (req, res) => {
     try {
         await initDatabase(); // Ensure database is initialized
-        res.sendFile(path.join(__dirname, '../../public', 'index.html'));
+        const indexPath = path.join(process.cwd(), 'public', 'index.html');
+        res.sendFile(indexPath);
     } catch (error) {
         console.error('Error loading home page:', error);
         res.status(500).send('Error loading page');
@@ -236,7 +237,8 @@ app.get('/api/deal/:softwareSlug', async (req, res) => {
 app.get('*', async (req, res) => {
     try {
         await initDatabase(); // Ensure database is initialized
-        res.sendFile(path.join(__dirname, '../../public', 'index.html'));
+        const indexPath = path.join(process.cwd(), 'public', 'index.html');
+        res.sendFile(indexPath);
     } catch (error) {
         console.error('Error in catch-all route:', error);
         res.status(500).send('Error loading page');
