@@ -160,30 +160,83 @@ app.get('/deal/:softwareSlug', async (req, res) => {
                 return res.status(404).send('Deal not found');
             }
 
-            // Read template and replace placeholders
-            const templatePath = path.join(process.cwd(), 'public', 'index.html');
-            let html = fs.readFileSync(templatePath, 'utf8');
-            
+            // Generate HTML directly instead of reading template file
             const seoTitle = `${deal.discount} Discount on ${deal.software_name} | Coupon Promo Code`;
             const seoDescription = deal.description || `Get the best deal on ${deal.software_name}.`;
             const softwareLogoHtml = `<img id="software-logo" src="${deal.logo_url || fallbackSvg(deal.software_name)}" alt="${deal.software_name} Logo">`;
 
-            html = html
-                .replace(/{{PAGE_TITLE}}/g, seoTitle)
-                .replace(/{{META_DESCRIPTION}}/g, seoDescription)
-                .replace(/{{SOFTWARE_LOGO_HTML}}/g, softwareLogoHtml)
-                .replace(/{{SOFTWARE_NAME_H1}}/g, deal.software_name)
-                .replace(/{{SOFTWARE_NAME}}/g, deal.software_name)
-                .replace(/{{SOFTWARE_CATEGORY}}/g, deal.category_name || 'Software')
-                .replace(/{{CATEGORY_NAME}}/g, deal.category_name || 'Software')
-                .replace(/{{DISCOUNT_TEXT}}/g, deal.discount)
-                .replace(/{{EXPIRY_DATE}}/g, deal.time_limit || 'Limited Time')
-                .replace(/{{COUPON_CODE}}/g, deal.coupon_code || 'N/A')
-                .replace(/{{DEAL_TITLE}}/g, deal.deal_title || `${deal.discount} ${deal.software_name}`)
-                .replace(/{{SOFTWARE_DESCRIPTION}}/g, deal.description || '')
-                .replace(/{{ABOUT_SECTION_CONTENT}}/g, deal.about || '')
-                .replace(/{{RELATED_DEALS_GRID}}/g, '')
-                .replace(/{{BOTTOM_CATEGORY_BADGES}}/g, `<span class="category-badge">${deal.category_name}</span>`);
+            const html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${seoTitle}</title>
+    <meta name="description" content="${seoDescription}">
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px 0; }
+        .nav { display: flex; gap: 20px; align-items: center; }
+        .nav a { color: white; text-decoration: none; padding: 10px 15px; }
+        .hero-section { text-align: center; padding: 60px 0; background: #f8f9fa; }
+        .software-logo img { width: 120px; height: 120px; border-radius: 12px; margin-bottom: 20px; }
+        .deal-section { padding: 40px 0; }
+        .coupon-code { background: #00D4AA; color: white; padding: 15px; border-radius: 8px; font-size: 18px; font-weight: bold; }
+        .get-deal-btn { background: #00D4AA; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <h2>DealHub</h2>
+                <a href="/deals">All Deals</a>
+                <a href="/blog">Blog</a>
+                <a href="/faq">FAQ</a>
+                <a href="/hire-us">Hire Us</a>
+                <a href="#" onclick="openContactPopup()">Contact Us</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="container">
+                <div class="software-logo">${softwareLogoHtml}</div>
+                <h1>${deal.software_name}</h1>
+                <div class="tags">
+                    <span class="tag discount">${deal.discount}</span>
+                    <span class="tag limited-time">${deal.time_limit || 'Limited Time'}</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="deal-section">
+            <div class="container">
+                <div class="deal-content">
+                    <h2>${deal.deal_title || deal.software_name + ' Deal'}</h2>
+                    <p><strong>Category:</strong> ${deal.category_name || 'Software'}</p>
+                    <p>${deal.description || ''}</p>
+                    
+                    <div class="coupon-section">
+                        <label>COUPON CODE:</label>
+                        <div class="coupon-code">${deal.coupon_code || 'N/A'}</div>
+                        <button class="get-deal-btn" onclick="window.open('${deal.website_url}', '_blank')">Get Deal</button>
+                    </div>
+                    
+                    ${deal.about ? `<div class="about-section"><h3>About ${deal.software_name}</h3><p>${deal.about}</p></div>` : ''}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="background: #333; color: white; text-align: center; padding: 20px;">
+        <p>&copy; 2024 DealHub. All rights reserved.</p>
+    </footer>
+</body>
+</html>`;
 
             res.send(html);
         });
@@ -197,8 +250,76 @@ app.get('/deal/:softwareSlug', async (req, res) => {
 app.get('/', async (req, res) => {
     try {
         await initDatabase(); // Ensure database is initialized
-        const indexPath = path.join(process.cwd(), 'public', 'index.html');
-        res.sendFile(indexPath);
+        
+        // Generate simple home page HTML
+        const html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DealHub - Best Software Deals & Discounts</title>
+    <meta name="description" content="Discover the best software deals and discounts. Save money on top tools and services.">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px 0; }
+        .nav { display: flex; gap: 20px; align-items: center; }
+        .nav a { color: white; text-decoration: none; padding: 10px 15px; }
+        .hero { text-align: center; padding: 80px 0; background: #f8f9fa; }
+        .deals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 40px 0; }
+        .deal-card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .deal-logo { width: 60px; height: 60px; border-radius: 8px; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="nav">
+                <h2>DealHub</h2>
+                <a href="/deals">All Deals</a>
+                <a href="/blog">Blog</a>
+                <a href="/faq">FAQ</a>
+                <a href="/hire-us">Hire Us</a>
+                <a href="#" onclick="alert('Contact popup would open here')">Contact Us</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Best Software Deals & Discounts</h1>
+                <p>Discover amazing deals on top software tools</p>
+            </div>
+        </section>
+
+        <section class="deals-grid">
+            <div class="container">
+                <h2>Featured Deals</h2>
+                <div class="deal-card">
+                    <img src="${fallbackSvg('Dnrater')}" alt="Dnrater" class="deal-logo">
+                    <h3>Dnrater</h3>
+                    <p>76% OFF - AI domain name selection tool</p>
+                    <a href="/deal/dnrater" style="background: #00D4AA; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px;">View Deal</a>
+                </div>
+                <div class="deal-card">
+                    <img src="${fallbackSvg('TaskMagic')}" alt="TaskMagic" class="deal-logo">
+                    <h3>TaskMagic</h3>
+                    <p>50% OFF - Automation platform</p>
+                    <a href="/deal/taskmagic" style="background: #00D4AA; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px;">View Deal</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="background: #333; color: white; text-align: center; padding: 20px;">
+        <p>&copy; 2024 DealHub. All rights reserved.</p>
+    </footer>
+</body>
+</html>`;
+        
+        res.send(html);
     } catch (error) {
         console.error('Error loading home page:', error);
         res.status(500).send('Error loading page');
@@ -246,3 +367,4 @@ app.get('*', async (req, res) => {
 });
 
 module.exports.handler = serverless(app);
+
