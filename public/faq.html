@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions - Deal Hub</title>
+    <meta name="description" content="Find answers to common questions about Deal Hub. Learn about partnerships, featured deals, and how to get the best SaaS and tools discounts.">
+    <link rel="stylesheet" href="/home-styles.css">
+    <style>
+        .faq-hero {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        .faq-hero h1 {
+            font-size: 3rem;
+            margin: 0 0 20px 0;
+            font-weight: 300;
+        }
+        .faq-hero p {
+            font-size: 1.3rem;
+            margin: 0;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .faq-content {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        .faq-section {
+            margin-bottom: 50px;
+        }
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        .faq-question {
+            background: #667eea;
+            color: white;
+            padding: 25px 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        .faq-answer {
+            padding: 25px 30px;
+            background: #fafafa;
+            border-top: 1px solid #eee;
+        }
+        .faq-answer p {
+            color: #555;
+            line-height: 1.7;
+            margin: 0;
+        }
+        .faq-answer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .faq-answer a:hover {
+            text-decoration: underline;
+        }
+        .contact-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .contact-section h2 {
+            margin: 0 0 15px 0;
+            font-size: 2rem;
+        }
+        .contact-section p {
+            margin: 0 0 25px 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .contact-button {
+            display: inline-block;
+            background: #00D4AA;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background 0.3s ease;
+        }
+        .contact-button:hover {
+            background: #00B894;
+        }
+        @media (max-width: 768px) {
+            .faq-item {
+                padding: 20px;
+            }
+            .faq-question {
+                font-size: 1.1rem;
+            }
+            .faq-answer.active {
+                padding: 20px;
+            }
+            .contact-section {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Contact Popup Styles */
+        .contact-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        .contact-popup.active {
+            display: flex;
+        }
+        .contact-popup-content {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .contact-popup-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+        .contact-popup-close:hover {
+            color: #333;
+        }
+        .contact-popup h2 {
+            color: #333;
+            margin: 0 0 20px 0;
+            font-size: 1.8rem;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .contact-submit-btn {
+            background: #667eea;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .contact-submit-btn:hover {
+            background: #5a67d8;
+        }
+        .contact-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .contact-info h3 {
+            margin: 0 0 15px 0;
+            color: #333;
+        }
+        .contact-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .contact-info a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h2>Deal Hub</h2>
+            </div>
+            <nav class="nav">
+                <a href="/deals">All Deals</a>
+                <a href="/blog">Blog</a>
+                <a href="/faq">FAQ</a>
+                <a href="/hire-us">Hire Us</a>
+                <a href="#" onclick="openContactPopup()">Contact Us</a>
+            </nav>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><img src="/images/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+                <a href="#" class="social-icon"><img src="/images/x.png" alt="X/Twitter" style="width: 24px; height: 24px;"></a>
+                <a href="#" class="social-icon"><img src="/images/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- FAQ Hero Section -->
+    <section class="faq-hero">
+        <div class="container">
+            <h1>Frequently Asked Questions</h1>
+            <p>Everything you need to know about Deal Hub partnerships and exclusive deals</p>
+        </div>
+    </section>
+
+    <!-- FAQ Content -->
+    <div class="faq-content">
+        <div class="faq-section">
+            <div class="faq-item">
+                <div class="faq-question">
+                    What do I get as a partner?
+                </div>
+                <div class="faq-answer">
+                    <p>As a valued Deal Hub partner, you'll receive: Access to exclusive discount opportunities, subscription to our partner newsletter with industry insights, promoted posts across our social media channels, and entry into our community of entrepreneurs and business owners looking to share knowledge, funding opportunities, and mentorships.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    How do I become a partner?
+                </div>
+                <div class="faq-answer">
+                    <p>Send us an email at <a href="mailto:hello@dealhub.com">hello@dealhub.com</a> and we'll get back to you ASAP. We'd love to feature your coupon, discount, or include your service or app in our monthly promotions. New deals are typically posted within 24 hours of approval.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    What increases my chances of being featured?
+                </div>
+                <div class="faq-answer">
+                    <p>We receive hundreds of applications monthly, so make sure to stand out by offering our community the best deal possible. Just like most successful communities, Deal Hub thrives when members provide genuine value to each other - the more you're willing to give, the more you'll receive in return.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    My product is just an MVP. Is that okay?
+                </div>
+                <div class="faq-answer">
+                    <p>Absolutely! Even an MVP or beta version can provide tremendous value to our community. As long as there are no hidden strings attached and you're offering genuine value, we're happy to consider featuring your product.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Why did we launch Deal Hub?
+                </div>
+                <div class="faq-answer">
+                    <p>Deal Hub was created by entrepreneurs, for entrepreneurs. We spent too much time and money searching for the right tools and solutions for our businesses. In the startup world, every dollar and minute counts. That's why we curate only the best SaaS and tools, constantly working with our partners to ensure our community gets maximum value.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    How much does it cost?
+                </div>
+                <div class="faq-answer">
+                    <p>Deal Hub is completely free for both users and partners! Our platform is supported through partnerships and affiliate relationships. If you ever need additional marketing or promotional services, feel free to reach out to us at <a href="mailto:partnerships@dealhub.com">partnerships@dealhub.com</a></p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I suggest deals even if I'm not a partner?
+                </div>
+                <div class="faq-answer">
+                    <p>Currently, only approved deals are featured on our platform. However, if you know of a company you'd love to see listed, please let us know through your favorite social platform or email us directly. We're happy to reach out to them on your behalf!</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    I see my competition on the site, should I still join?
+                </div>
+                <div class="faq-answer">
+                    <p>Absolutely! In fact, many companies that work with us solve similar problems and often end up collaborating to create even better products and solutions. We're a community above all else, so you'll get out what you put in. May the best deal win! 🏆</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h2>Still Have Questions?</h2>
+            <p>Our team is here to help you get the most out of Deal Hub</p>
+            <a href="mailto:hello@dealhub.com" class="contact-button">Contact Us</a>
+        </div>
+    </div>
+
+    <!-- Newsletter Signup -->
+    <section class="newsletter">
+        <div class="container">
+            <h2 class="newsletter-title">Stay updated on sweet deals!</h2>
+            <p class="newsletter-subtitle">You don't want to miss out</p>
+            <div class="newsletter-form">
+                <input type="email" placeholder="Enter your email address" class="email-input" id="email-input">
+                <button class="newsletter-btn" onclick="subscribeNewsletter()">Give Me Free Stuff</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <h2>Deal Hub</h2>
+            </div>
+            <div class="footer-social">
+                <a href="#" class="social-icon"><img src="/images/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+                <a href="#" class="social-icon"><img src="/images/x.png" alt="X/Twitter" style="width: 24px; height: 24px;"></a>
+                <a href="#" class="social-icon"><img src="/images/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
+            </div>
+            <div class="footer-text">
+                &copy; 2025 Made with Love by <span class="highlight">Deal Hub</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Popup Modal -->
+    <div class="contact-popup" id="contact-popup">
+        <div class="contact-popup-content">
+            <button class="contact-popup-close" onclick="closeContactPopup()">&times;</button>
+            <h2>Contact Deal Hub</h2>
+            
+            <form class="contact-form" onsubmit="submitContactForm(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <input type="text" placeholder="Subject" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit" class="contact-submit-btn">Send Message</button>
+            </form>
+            
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <p><strong>Email:</strong> <a href="mailto:hello@dealhub.com">hello@dealhub.com</a></p>
+                <p><strong>Partnership Inquiries:</strong> <a href="mailto:partnerships@dealhub.com">partnerships@dealhub.com</a></p>
+                <p><strong>Response Time:</strong> Within 24 hours</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Newsletter subscription function
+        function subscribeNewsletter() {
+            const email = document.getElementById('email-input').value;
+            if (email && email.includes('@')) {
+                alert('Thank you for subscribing! You\'ll receive the latest deals and exclusive offers in your inbox.');
+                document.getElementById('email-input').value = '';
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        }
+
+        // Contact popup functions
+        function openContactPopup() {
+            document.getElementById('contact-popup').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeContactPopup() {
+            document.getElementById('contact-popup').classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        function submitContactForm(event) {
+            event.preventDefault();
+            alert('Thank you for your message! We\'ll get back to you within 24 hours.');
+            closeContactPopup();
+            event.target.reset(); // Clear form
+        }
+
+        // Close popup when clicking outside
+        document.addEventListener('click', (e) => {
+            const popup = document.getElementById('contact-popup');
+            if (e.target === popup) {
+                closeContactPopup();
+            }
+        });
+
+        // Add enter key support for newsletter
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('email-input')?.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    subscribeNewsletter();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

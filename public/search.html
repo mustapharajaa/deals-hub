@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search SaaS & Tools Deals & Coupon Codes - Deal Hub</title>
+    <meta name="description" content="Search for the best software deals and coupon codes. Find discounts on your favorite tools and applications.">
+    <link rel="stylesheet" href="/home-styles.css">
+    <style>
+        .search-hero {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        .search-hero h1 {
+            font-size: 2.5rem;
+            margin: 0 0 20px 0;
+            font-weight: 300;
+        }
+        .search-hero p {
+            font-size: 1.2rem;
+            margin: 0 0 30px 0;
+            opacity: 0.9;
+        }
+        .search-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .search-form input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+        }
+        .search-form button {
+            padding: 15px 30px;
+            background: #00D4AA;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .search-form button:hover {
+            background: #00B894;
+        }
+        .search-content {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+        .search-results {
+            margin-top: 30px;
+        }
+        .search-results h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        .results-info {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            color: #666;
+        }
+        .deal-item {
+            display: flex;
+            gap: 20px;
+            padding: 25px;
+            border-bottom: 1px solid #eee;
+            align-items: flex-start;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .deal-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            background: #fafafa;
+        }
+        .deal-logo {
+            width: 80px;
+            height: 80px;
+            flex-shrink: 0;
+        }
+        .deal-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .deal-info {
+            flex: 1;
+        }
+        .deal-info h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.3rem;
+            color: #333;
+        }
+        .deal-info h3 a {
+            text-decoration: none;
+            color: #333;
+        }
+        .deal-info h3 a:hover {
+            color: #667eea;
+        }
+        .deal-subtitle {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0 0 10px 0;
+        }
+        .deal-description {
+            color: #555;
+            line-height: 1.5;
+            margin: 0;
+        }
+        .deal-meta {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        .deal-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .popular-searches {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .popular-searches h3 {
+            margin: 0 0 20px 0;
+            color: #333;
+        }
+        .search-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .search-tag {
+            padding: 8px 16px;
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+        .search-tag:hover {
+            background: #5a67d8;
+        }
+
+        /* Contact Popup Styles */
+        .contact-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        .contact-popup.active {
+            display: flex;
+        }
+        .contact-popup-content {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .contact-popup-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+        .contact-popup-close:hover {
+            color: #333;
+        }
+        .contact-popup h2 {
+            color: #333;
+            margin: 0 0 20px 0;
+            font-size: 1.8rem;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .contact-submit-btn {
+            background: #667eea;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .contact-submit-btn:hover {
+            background: #5a67d8;
+        }
+        .contact-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .contact-info h3 {
+            margin: 0 0 15px 0;
+            color: #333;
+        }
+        .contact-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .contact-info a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h2>Deal Hub</h2>
+            </div>
+            <nav class="nav">
+                <a href="/deals">All Deals</a>
+                <a href="/blog">Blog</a>
+                <a href="/faq">FAQ</a>
+                <a href="/hire-us">Hire Us</a>
+                <a href="#" onclick="openContactPopup()">Contact Us</a>
+            </nav>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><img src="/images/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+                <a href="#" class="social-icon"><img src="/images/x.png" alt="X/Twitter" style="width: 24px; height: 24px;"></a>
+                <a href="#" class="social-icon"><img src="/images/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Hero Section -->
+    <section class="search-hero">
+        <div class="container">
+            <h1>Search SaaS & Tools Deals</h1>
+            <p>Find the perfect software deal for your business needs</p>
+            <div class="search-form">
+                <input type="text" id="search-input" placeholder="Search for software deals..." value="">
+                <button onclick="performSearch()">Search Deals</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Content -->
+    <div class="search-content">
+        <div class="search-results" id="search-results" style="display: none;">
+            <h2 id="results-title">Search Results</h2>
+            <div class="results-info" id="results-info"></div>
+            <div id="results-list"></div>
+        </div>
+
+        <div class="popular-searches" id="popular-searches">
+            <h3>Popular Searches</h3>
+            <div class="search-tags">
+                <a href="/search?q=adobe" class="search-tag">Adobe</a>
+                <a href="/search?q=microsoft" class="search-tag">Microsoft</a>
+                <a href="/search?q=project+management" class="search-tag">Project Management</a>
+                <a href="/search?q=design" class="search-tag">Design</a>
+                <a href="/search?q=video+editing" class="search-tag">Video Editing</a>
+                <a href="/search?q=automation" class="search-tag">Automation</a>
+                <a href="/search?q=productivity" class="search-tag">Productivity</a>
+                <a href="/search?q=marketing" class="search-tag">Marketing</a>
+            </div>
+        </div>
+
+        <div class="no-results" id="no-results" style="display: none;">
+            <h3>No deals found</h3>
+            <p>Try different search terms or browse our popular categories above.</p>
+        </div>
+    </div>
+
+    <!-- Newsletter Signup -->
+    <section class="newsletter">
+        <div class="container">
+            <h2 class="newsletter-title">Stay updated on sweet deals!</h2>
+            <p class="newsletter-subtitle">You don't want to miss out</p>
+            <div class="newsletter-form">
+                <input type="email" placeholder="Enter your email address" class="email-input" id="email-input">
+                <button class="newsletter-btn" onclick="subscribeNewsletter()">Give Me Free Stuff</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <h2>Deal Hub</h2>
+            </div>
+            <div class="footer-social">
+                <a href="#" class="social-icon"><img src="/images/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+                <a href="#" class="social-icon"><img src="/images/x.png" alt="X/Twitter" style="width: 24px; height: 24px;"></a>
+                <a href="#" class="social-icon"><img src="/images/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
+            </div>
+            <div class="footer-text">
+                © 2025 Made with Love by <span class="highlight">Deal Hub</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Popup Modal -->
+    <div class="contact-popup" id="contact-popup">
+        <div class="contact-popup-content">
+            <button class="contact-popup-close" onclick="closeContactPopup()">&times;</button>
+            <h2>Contact Deal Hub</h2>
+            
+            <form class="contact-form" onsubmit="submitContactForm(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <input type="text" placeholder="Subject" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit" class="contact-submit-btn">Send Message</button>
+            </form>
+            
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <p><strong>Email:</strong> <a href="mailto:hello@dealhub.com">hello@dealhub.com</a></p>
+                <p><strong>Partnership Inquiries:</strong> <a href="mailto:partnerships@dealhub.com">partnerships@dealhub.com</a></p>
+                <p><strong>Response Time:</strong> Within 24 hours</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Search functionality
+        function performSearch() {
+            const searchTerm = document.getElementById('search-input').value.trim();
+            if (!searchTerm) return;
+            
+            // Update URL with search parameter
+            const url = new URL(window.location);
+            url.searchParams.set('q', searchTerm);
+            window.history.pushState({}, '', url);
+            
+            searchDeals(searchTerm);
+        }
+
+        async function searchDeals(query = '') {
+            const searchResults = document.getElementById('search-results');
+            const popularSearches = document.getElementById('popular-searches');
+            const noResults = document.getElementById('no-results');
+            const resultsList = document.getElementById('results-list');
+            const resultsInfo = document.getElementById('results-info');
+            const resultsTitle = document.getElementById('results-title');
+
+            if (!query) {
+                // Get query from URL parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                query = urlParams.get('q') || '';
+                document.getElementById('search-input').value = query;
+            }
+
+            if (!query) {
+                searchResults.style.display = 'none';
+                popularSearches.style.display = 'block';
+                noResults.style.display = 'none';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+                const data = await response.json();
+
+                if (data.deals && data.deals.length > 0) {
+                    // Show results
+                    searchResults.style.display = 'block';
+                    popularSearches.style.display = 'none';
+                    noResults.style.display = 'none';
+
+                    resultsTitle.textContent = `Search Results for "${query}"`;
+                    resultsInfo.textContent = `Found ${data.deals.length} deals matching your search`;
+
+                    resultsList.innerHTML = data.deals.map(deal => {
+                        const logoSrc = deal.logo_url || `data:image/svg+xml;base64,${btoa(`<svg width="80" height="80" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" fill="#00D4AA" rx="12"/><text x="40" y="55" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white" text-anchor="middle">${deal.software_name.charAt(0).toUpperCase()}</text></svg>`)}`;
+                        const softwareSlug = deal.software_name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+                        const truncatedDescription = deal.description && deal.description.length > 120 ? deal.description.substring(0, 120) + '...' : deal.description;
+                        
+                        return `
+                            <a href="/deal/${softwareSlug}" class="deal-item">
+                                <div class="deal-logo">
+                                    <img src="${logoSrc}" alt="${deal.software_name} Logo">
+                                </div>
+                                <div class="deal-info">
+                                    <h3>${deal.software_name}</h3>
+                                    <div class="deal-subtitle">${deal.discount}</div>
+                                    <div class="deal-description">${truncatedDescription || 'Great software deal available'}</div>
+                                    <div class="deal-meta">
+                                        <span>🏷️ ${deal.software_name}</span>
+                                        <span>💰 ${deal.discount}</span>
+                                        <span>⏰ ${deal.time_limit || 'Limited Time'}</span>
+                                        <span>📅 Updated ${new Date().toLocaleDateString('en-US')}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        `;
+                    }).join('');
+                } else {
+                    // No results found
+                    searchResults.style.display = 'none';
+                    popularSearches.style.display = 'block';
+                    noResults.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+                searchResults.style.display = 'none';
+                popularSearches.style.display = 'block';
+                noResults.style.display = 'block';
+            }
+        }
+
+        // Newsletter subscription function
+        function subscribeNewsletter() {
+            const email = document.getElementById('email-input').value;
+            if (email) {
+                alert('Thank you for subscribing! We\'ll keep you updated with the latest deals.');
+                document.getElementById('email-input').value = '';
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        }
+
+        // Contact popup functions
+        function openContactPopup() {
+            document.getElementById('contact-popup').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeContactPopup() {
+            document.getElementById('contact-popup').classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        function submitContactForm(event) {
+            event.preventDefault();
+            alert('Thank you for your message! We\'ll get back to you within 24 hours.');
+            closeContactPopup();
+            event.target.reset(); // Clear form
+        }
+
+        // Close popup when clicking outside
+        document.addEventListener('click', (e) => {
+            const popup = document.getElementById('contact-popup');
+            if (e.target === popup) {
+                closeContactPopup();
+            }
+        });
+
+        // Initialize search on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if there's a search query in the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q');
+            if (query) {
+                document.getElementById('search-input').value = query;
+                searchDeals(query);
+            }
+
+            // Add enter key support for search
+            document.getElementById('search-input').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

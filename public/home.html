@@ -6,6 +6,130 @@
     <title>Deal Hub - The Sweetest Discounts & Deals for Entrepreneurs</title>
     <meta name="description" content="Discover the best software deals and discounts for entrepreneurs. Save money on top tools and services.">
     <link rel="stylesheet" href="/home-styles.css">
+    <style>
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 20px;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p {
+                font-size: 1.1rem;
+            }
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            .deals-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Contact Popup Styles */
+        .contact-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        .contact-popup.active {
+            display: flex;
+        }
+        .contact-popup-content {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .contact-popup-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+        .contact-popup-close:hover {
+            color: #333;
+        }
+        .contact-popup h2 {
+            color: #333;
+            margin: 0 0 20px 0;
+            font-size: 1.8rem;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .contact-submit-btn {
+            background: #667eea;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .contact-submit-btn:hover {
+            background: #5a67d8;
+        }
+        .contact-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .contact-info h3 {
+            margin: 0 0 15px 0;
+            color: #333;
+        }
+        .contact-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .contact-info a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -15,11 +139,11 @@
                 <h2>Deal Hub</h2>
             </div>
             <nav class="nav">
-                <a href="/all-deals">All Deals</a>
+                <a href="/deals">All Deals</a>
                 <a href="/blog">Blog</a>
                 <a href="/faq">FAQ</a>
                 <a href="/hire-us">Hire Us</a>
-                <a href="/contact">Contact Us</a>
+                <a href="#" onclick="openContactPopup()">Contact Us</a>
             </nav>
             <div class="social-icons">
                 <a href="#" class="social-icon"><img src="/images/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
@@ -120,11 +244,66 @@
                 <a href="#" class="social-icon"><img src="/images/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
             </div>
             <div class="footer-text">
-                © 2025 Made with Love by <span class="highlight">Deal Hub</span>
+                &copy; 2025 Made with Love by <span class="highlight">Deal Hub</span>
             </div>
         </div>
     </footer>
 
+    <!-- Contact Popup Modal -->
+    <div class="contact-popup" id="contact-popup">
+        <div class="contact-popup-content">
+            <button class="contact-popup-close" onclick="closeContactPopup()">&times;</button>
+            <h2>Contact Deal Hub</h2>
+            
+            <form class="contact-form" onsubmit="submitContactForm(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <input type="text" placeholder="Subject" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit" class="contact-submit-btn">Send Message</button>
+            </form>
+            
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <p><strong>Email:</strong> <a href="mailto:hello@dealhub.com">hello@dealhub.com</a></p>
+                <p><strong>Partnership Inquiries:</strong> <a href="mailto:partnerships@dealhub.com">partnerships@dealhub.com</a></p>
+                <p><strong>Response Time:</strong> Within 24 hours</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Contact popup functions
+        function openContactPopup() {
+            document.getElementById('contact-popup').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeContactPopup() {
+            document.getElementById('contact-popup').classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        function submitContactForm(event) {
+            event.preventDefault();
+            alert('Thank you for your message! We\'ll get back to you within 24 hours.');
+            closeContactPopup();
+            event.target.reset(); // Clear form
+        }
+
+        // Close popup when clicking outside
+        document.addEventListener('click', (e) => {
+            const popup = document.getElementById('contact-popup');
+            if (e.target === popup) {
+                closeContactPopup();
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add event listeners here if needed
+        });
+    </script>
     <script src="/home-script.js"></script>
 </body>
 </html>

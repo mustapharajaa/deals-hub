@@ -6,7 +6,17 @@ const fs = require('fs');
 // Use stealth plugin to avoid detection
 puppeteer.use(StealthPlugin());
 
-console.log('🚀 Starting Ultra-Stealth Google Search...');
+// Load configuration
+let config;
+try {
+    const configPath = path.join(__dirname, 'scheduler-config.json');
+    config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+} catch (error) {
+    console.error('❌ Error loading config:', error.message);
+    process.exit(1);
+}
+
+// Skip initial config check - let continuous monitoring handle everything
 
 // Start ultra-stealth browser automation
 async function startPuppeteerSearch() {
@@ -785,7 +795,6 @@ async function startPuppeteerSearch() {
         }
         
         console.log('🎉 Ultra-stealth browser showing search results!');
-        console.log('📝 Browser will stay open - you can see the first result page!');
         
         // Start Gemini AI analysis
         console.log('🤖 Starting Gemini AI analysis of scraped data...');
@@ -806,6 +815,37 @@ async function startPuppeteerSearch() {
                     
                     require('fs').writeFileSync('./new softwers.txt', updatedContent, 'utf8');
                     console.log(`🗑️ Removed "${softwareName}" from text file. ${remainingLines.length} software(s) remaining.`);
+                    
+                    // Close browser after automation completes
+                    console.log('🔒 Closing browser...');
+                    await browser.close();
+                    
+                    // Check if there are more software to process
+                    if (remainingLines.length > 0) {
+                        console.log(`⏳ Waiting ${getRandomDelay()} minutes before processing next software...`);
+                        const delayMs = getRandomDelay() * 60 * 1000;
+                        setTimeout(() => {
+                            // Check config again before processing next software
+                            try {
+                                const configPath = path.join(__dirname, 'scheduler-config.json');
+                                const updatedConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+                                if (!updatedConfig.enabled) {
+                                    console.log('⏹️ Automation DISABLED in config - stopping loop');
+                                    console.log('🔄 Returning to monitoring mode...');
+                                    // Return to monitoring instead of stopping completely
+                                    scheduleNextCheck(updatedConfig);
+                                    return;
+                                }
+                            } catch (configError) {
+                                console.log('⚠️ Could not read config, continuing with automation...');
+                            }
+                            
+                            console.log('🔄 Starting next software processing...');
+                            startPuppeteerSearch();
+                        }, delayMs);
+                    } else {
+                        console.log('✅ All software processed! No more entries in new softwers.txt');
+                    }
                 } catch (fileError) {
                     console.log(`⚠️ Could not update text file: ${fileError.message}`);
                 }
@@ -820,10 +860,155 @@ async function startPuppeteerSearch() {
     }
 }
 
-// Start the automation
-startPuppeteerSearch();
+// Function to get random delay for new software processing
+function getRandomDelay() {
+    try {
+        // Read current config to get latest delay settings
+        const configPath = path.join(__dirname, 'scheduler-config.json');
+        const currentConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+        const min = currentConfig.newSoftware.minDelayMinutes;
+        const max = currentConfig.newSoftware.maxDelayMinutes;
+        return Math.random() * (max - min) + min;
+    } catch (error) {
+        // Fallback to cached config if file read fails
+        const min = config.newSoftware.minDelayMinutes;
+        const max = config.newSoftware.maxDelayMinutes;
+        return Math.random() * (max - min) + min;
+    }
+}
 
-// Keep script running
-setInterval(() => {
-    // Keep alive
-}, 60000);
+// Function to just open browser without automation
+async function openBrowserOnly() {
+    try {
+        // Launch browser with same stealth settings but no automation
+        const browser = await puppeteer.launch({
+            headless: false,
+            defaultViewport: null,
+            ignoreDefaultArgs: ['--enable-automation'],
+            args: [
+                '--start-maximized',
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-blink-features=AutomationControlled',
+                '--disable-features=VizDisplayCompositor',
+                '--disable-web-security',
+                '--disable-features=site-per-process',
+                '--flag-switches-begin --disable-site-isolation-trials --flag-switches-end',
+                '--disable-extensions-except',
+                '--disable-extensions',
+                '--disable-plugins-discovery',
+                '--disable-default-apps',
+                '--no-first-run',
+                '--no-default-browser-check',
+                '--disable-dev-shm-usage',
+                '--disable-gpu',
+                '--no-zygote',
+                '--single-process',
+                '--lang=en-US',
+                '--accept-lang=en-US,en;q=0.9'
+            ]
+        });
+        
+        const page = await browser.newPage();
+        
+        // Set user agent and other stealth properties
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+        await page.setViewport({ width: 1920, height: 1080 });
+        
+        // Navigate to Google and wait
+        await page.goto('https://www.google.com', { waitUntil: 'networkidle2' });
+        
+    } catch (error) {
+        console.error('❌ Error opening browser:', error);
+    }
+}
+
+// Continuous monitoring function
+function startContinuousMonitoring() {
+    console.log('🔄 Starting continuous monitoring...');
+    console.log('👁️ Monitoring config and software queue with configured delays...');
+    
+    // Check immediately on start
+    checkAndStartAutomation();
+}
+
+// Function to check config and start automation if conditions are met
+function checkAndStartAutomation() {
+    try {
+        // Read current config
+        const configPath = path.join(__dirname, 'scheduler-config.json');
+        const currentConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+        
+        // Check if automation is enabled
+        if (!currentConfig.enabled) {
+            // Schedule next check with configured delay
+            scheduleNextCheck(currentConfig);
+            return;
+        }
+        
+        // Check if there are software in the queue
+        const softwareFile = './new softwers.txt';
+        if (!fs.existsSync(softwareFile)) {
+            // Schedule next check with configured delay
+            scheduleNextCheck(currentConfig);
+            return;
+        }
+        
+        const fileContent = fs.readFileSync(softwareFile, 'utf8');
+        const softwareList = fileContent.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+        
+        if (softwareList.length === 0) {
+            // Schedule next check with configured delay
+            scheduleNextCheck(currentConfig);
+            return;
+        }
+        
+        // Both conditions met - start automation
+        console.log(`✅ Conditions met: enabled=true, ${softwareList.length} software in queue`);
+        console.log('🚀 Starting automation...');
+        
+        // Update global config reference
+        config = currentConfig;
+        
+        // Start the automation
+        startPuppeteerSearch();
+        
+    } catch (error) {
+        console.log('⚠️ Error during monitoring check:', error.message);
+        // Schedule next check even on error
+        try {
+            const configPath = path.join(__dirname, 'scheduler-config.json');
+            const currentConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+            scheduleNextCheck(currentConfig);
+        } catch (configError) {
+            // Fallback to 30 second check if config can't be read
+            setTimeout(() => checkAndStartAutomation(), 30000);
+        }
+    }
+}
+
+// Function to schedule next monitoring check based on configured delays
+function scheduleNextCheck(currentConfig) {
+    const min = currentConfig.newSoftware.minDelayMinutes;
+    const max = currentConfig.newSoftware.maxDelayMinutes;
+    const delayMinutes = Math.random() * (max - min) + min;
+    const delayMs = delayMinutes * 60 * 1000;
+    
+    setTimeout(() => {
+        checkAndStartAutomation();
+    }, delayMs);
+}
+
+// Continuous monitoring function
+function startContinuousMonitoring() {
+    console.log('🔄 Starting continuous monitoring...');
+    console.log('👁️ Monitoring config and software queue with configured delays...');
+    
+    // Check immediately on start
+    checkAndStartAutomation();
+}
+
+// Start continuous monitoring instead of single execution
+startContinuousMonitoring();
+
+// ... (rest of the code remains the same)

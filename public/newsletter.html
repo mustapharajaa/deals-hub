@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter - Stay Updated on SaaS & Tools Deals - Deal Hub</title>
+    <meta name="description" content="Subscribe to our newsletter and stay updated with the latest SaaS and tools deals. Get exclusive discounts and coupon codes delivered to your inbox.">
+    <link rel="stylesheet" href="/home-styles.css">
+    <style>
+        .newsletter-hero {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        .newsletter-hero h1 {
+            font-size: 3rem;
+            margin: 0 0 20px 0;
+            font-weight: 300;
+        }
+        .newsletter-hero p {
+            font-size: 1.3rem;
+            margin: 0 0 40px 0;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .newsletter-signup-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .newsletter-signup-form input {
+            flex: 1;
+            padding: 18px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            outline: none;
+        }
+        .newsletter-signup-form button {
+            padding: 18px 35px;
+            background: #00D4AA;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            white-space: nowrap;
+        }
+        .newsletter-signup-form button:hover {
+            background: #00B894;
+        }
+        .newsletter-content {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        .benefits-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 50px;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+        .benefits-section h2 {
+            color: #333;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .benefit-item {
+            text-align: center;
+        }
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        .benefit-item h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        .benefit-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .top-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        .top-categories, .top-deals {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .top-categories h2, .top-deals h2 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .category-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+        .category-item:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        .category-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            width: 30px;
+            text-align: center;
+        }
+        .category-info {
+            flex: 1;
+        }
+        .category-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        .category-count {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .deal-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .deal-item-mini {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+        .deal-item-mini:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        .deal-logo-mini {
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .deal-logo-mini img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+        .deal-info-mini {
+            flex: 1;
+        }
+        .deal-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        .deal-discount {
+            font-size: 0.9rem;
+            color: #00D4AA;
+            font-weight: 600;
+        }
+        .stats-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        @media (max-width: 768px) {
+            .top-section {
+                grid-template-columns: 1fr;
+            }
+            .newsletter-signup-form {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .newsletter-signup-form input,
+            .newsletter-signup-form button {
+                width: 100%;
+            }
+            .benefits-section {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Contact Popup Styles */
+        .contact-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        .contact-popup.active {
+            display: flex;
+        }
+        .contact-popup-content {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .contact-popup-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+        .contact-popup-close:hover {
+            color: #333;
+        }
+        .contact-popup h2 {
+            color: #333;
+            margin: 0 0 20px 0;
+            font-size: 1.8rem;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .contact-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .contact-submit-btn {
+            background: #667eea;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .contact-submit-btn:hover {
+            background: #5a67d8;
+        }
+        .contact-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .contact-info h3 {
+            margin: 0 0 15px 0;
+            color: #333;
+        }
+        .contact-info p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .contact-info a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h2>Deal Hub</h2>
+            </div>
+            <nav class="nav">
+                <a href="/deals">All Deals</a>
+                <a href="/blog">Blog</a>
+                <a href="/faq">FAQ</a>
+                <a href="/hire-us">Hire Us</a>
+                <a href="#" onclick="openContactPopup()">Contact Us</a>
+            </nav>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><img src="/images/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+                <a href="#" class="social-icon"><img src="/images/x.png" alt="X/Twitter" style="width: 24px; height: 24px;"></a>
+                <a href="#" class="social-icon"><img src="/images/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Newsletter Hero Section -->
+    <section class="newsletter-hero">
+        <div class="container">
+            <h1>Stay Updated on Sweet Deals!</h1>
+            <p>Get the latest SaaS and tools deals delivered straight to your inbox. Never miss out on exclusive discounts and limited-time offers.</p>
+            <div class="newsletter-signup-form">
+                <input type="email" id="newsletter-email" placeholder="Enter your email address">
+                <button onclick="subscribeToNewsletter()">Give Me Free Stuff</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Content -->
+    <div class="newsletter-content">
+        <!-- Benefits Section -->
+        <section class="benefits-section">
+            <h2>Why Subscribe to Our Newsletter?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">🎯</div>
+                    <h3>Exclusive Deals</h3>
+                    <p>Get access to subscriber-only deals and discounts not available anywhere else.</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>Early Access</h3>
+                    <p>Be the first to know about new deals and limited-time offers before they go public.</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">📊</div>
+                    <h3>Curated Content</h3>
+                    <p>Receive handpicked deals tailored to your business needs and interests.</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">💰</div>
+                    <h3>Save Money</h3>
+                    <p>Our subscribers save an average of $500+ per month on software and tools.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <h2>Join Thousands of Smart Entrepreneurs</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">{{TOTAL_DEALS}}</div>
+                    <div class="stat-label">Active Deals</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">{{TOTAL_CATEGORIES}}</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">$500+</div>
+                    <div class="stat-label">Avg. Monthly Savings</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Happy Subscribers</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Top Categories and Deals -->
+        <section class="top-section">
+            <div class="top-categories">
+                <h2>🔥 Top Visited Categories</h2>
+                <div class="category-list">
+                    {{CATEGORIES_HTML}}
+                </div>
+            </div>
+            
+            <div class="top-deals">
+                <h2>⭐ Most Popular Deals</h2>
+                <div class="deal-list">
+                    {{DEALS_HTML}}
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Newsletter Signup -->
+    <section class="newsletter">
+        <div class="container">
+            <h2 class="newsletter-title">Ready to Start Saving?</h2>
+            <p class="newsletter-subtitle">Join our community of smart entrepreneurs</p>
+            <div class="newsletter-form">
+                <input type="email" placeholder="Enter your email address" class="email-input" id="footer-email-input">
+                <button class="newsletter-btn" onclick="subscribeToNewsletter()">Give Me Free Stuff</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <h2>Deal Hub</h2>
+            </div>
+            <div class="footer-social">
+                <a href="#" class="social-icon"><img src="/images/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
+                <a href="#" class="social-icon"><img src="/images/x.png" alt="X/Twitter" style="width: 24px; height: 24px;"></a>
+                <a href="#" class="social-icon"><img src="/images/linkedin.png" alt="LinkedIn" style="width: 24px; height: 24px;"></a>
+            </div>
+            <div class="footer-text">
+                © 2025 Made with Love by <span class="highlight">Deal Hub</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Popup Modal -->
+    <div class="contact-popup" id="contact-popup">
+        <div class="contact-popup-content">
+            <button class="contact-popup-close" onclick="closeContactPopup()">&times;</button>
+            <h2>Contact Deal Hub</h2>
+            
+            <form class="contact-form" onsubmit="submitContactForm(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <input type="text" placeholder="Subject" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit" class="contact-submit-btn">Send Message</button>
+            </form>
+            
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <p><strong>Email:</strong> <a href="mailto:hello@dealhub.com">hello@dealhub.com</a></p>
+                <p><strong>Partnership Inquiries:</strong> <a href="mailto:partnerships@dealhub.com">partnerships@dealhub.com</a></p>
+                <p><strong>Response Time:</strong> Within 24 hours</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Newsletter subscription function
+        function subscribeToNewsletter() {
+            const email = document.getElementById('newsletter-email')?.value || 
+                         document.getElementById('footer-email-input')?.value;
+            
+            if (email && email.includes('@')) {
+                alert('🎉 Thank you for subscribing! You\'ll receive the latest deals and exclusive offers in your inbox.');
+                // Clear both email inputs
+                if (document.getElementById('newsletter-email')) {
+                    document.getElementById('newsletter-email').value = '';
+                }
+                if (document.getElementById('footer-email-input')) {
+                    document.getElementById('footer-email-input').value = '';
+                }
+            } else {
+                alert('Please enter a valid email address.');
+            }
+        }
+
+        // Content is now server-side rendered, no loading needed
+
+        // Contact popup functions
+        function openContactPopup() {
+            document.getElementById('contact-popup').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeContactPopup() {
+            document.getElementById('contact-popup').classList.remove('active');
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+
+        function submitContactForm(event) {
+            event.preventDefault();
+            alert('Thank you for your message! We\'ll get back to you within 24 hours.');
+            closeContactPopup();
+            event.target.reset(); // Clear form
+        }
+
+        // Close popup when clicking outside
+        document.addEventListener('click', (e) => {
+            const popup = document.getElementById('contact-popup');
+            if (e.target === popup) {
+                closeContactPopup();
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add enter key support for newsletter signup
+            document.getElementById('newsletter-email')?.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    subscribeToNewsletter();
+                }
+            });
+            
+            document.getElementById('footer-email-input')?.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    subscribeToNewsletter();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

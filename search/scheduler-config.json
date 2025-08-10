@@ -1,14 +1,16 @@
 {
+  "enabled": true,
   "searchIntervalMonths": 1,
-  "minDelayMinutes": 30,
-  "maxDelayMinutes": 180,
+  "minDelayMinutes": 20,
+  "maxDelayMinutes": 120,
   "newSoftware": {
-    "minDelayMinutes": 15,
-    "maxDelayMinutes": 60,
+    "minDelayMinutes": 0,
+    "maxDelayMinutes": 1,
     "sourceFile": "./new softwers.txt",
     "searchKeywords": ["coupon code", "discount", "promo code"]
   },
   "description": {
+    "enabled": "Master switch to start/stop the entire automation system (true = ON, false = OFF)",
     "searchIntervalMonths": "How often to search each software already in database (1, 2, 3, etc. months)",
     "minDelayMinutes": "Minimum wait time between automation runs for existing software (in minutes)",
     "maxDelayMinutes": "Maximum wait time between automation runs for existing software (in minutes)",

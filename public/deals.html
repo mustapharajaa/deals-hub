@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deals in Category - Deal Hub</title>
-    <meta name="description" content="Discover the best software deals and discounts in this category. Save money on top tools and services.">
+    <title>Save Big on All Deals & Coupon Codes - Deal Hub</title>
+    <meta name="description" content="Browse all software deals and coupon codes. Find the best discounts on top tools and applications to save money.">
     <link rel="stylesheet" href="/home-styles.css">
     <style>
-        .category-hero {
+        .deals-hero {
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 80px 0;
+            padding: 50px 0;
             text-align: center;
-            /* Background will be set dynamically by server-side rendering */
         }
-        .category-hero h1 {
+        .deals-hero h1 {
             font-size: 3rem;
             margin: 0;
             font-weight: 300;
         }
-        .category-content {
+        .deals-content {
             display: flex;
             gap: 30px;
             max-width: 1200px;
@@ -58,8 +58,93 @@
         .category-tag:hover {
             opacity: 0.8;
         }
-        /* Background colors will be set dynamically by server-side rendering */
-        
+        .deal-item {
+            display: flex;
+            gap: 20px;
+            padding: 25px;
+            border-bottom: 1px solid #eee;
+            align-items: flex-start;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .deal-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            background: #fafafa;
+        }
+        .deal-item:last-child {
+            border-bottom: none;
+        }
+        .deal-logo {
+            width: 80px;
+            height: 80px;
+            flex-shrink: 0;
+        }
+        .deal-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .deal-info {
+            flex: 1;
+        }
+        .deal-info h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.3rem;
+            color: #333;
+        }
+        .deal-info h3 a {
+            text-decoration: none;
+            color: #333;
+        }
+        .deal-info h3 a:hover {
+            color: #667eea;
+        }
+        .deal-subtitle {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0 0 10px 0;
+        }
+        .deal-description {
+            color: #555;
+            line-height: 1.5;
+            margin: 0;
+        }
+        .deal-meta {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        .deal-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .deals-stats {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .deals-stats h2 {
+            margin: 0 0 10px 0;
+            color: #333;
+            font-size: 1.5rem;
+        }
+        .deals-stats p {
+            margin: 0;
+            color: #666;
+            font-size: 1rem;
+        }
+
         /* Contact Popup Styles */
         .contact-popup {
             display: none;
@@ -163,75 +248,6 @@
         .contact-info a:hover {
             text-decoration: underline;
         }
-        .deal-item {
-            display: flex;
-            gap: 20px;
-            padding: 25px;
-            border-bottom: 1px solid #eee;
-            align-items: flex-start;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-        .deal-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-            background: #fafafa;
-        }
-        .deal-item:last-child {
-            border-bottom: none;
-        }
-        .deal-logo {
-            width: 80px;
-            height: 80px;
-            flex-shrink: 0;
-        }
-        .deal-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-        .deal-info {
-            flex: 1;
-        }
-        .deal-info h3 {
-            margin: 0 0 8px 0;
-            font-size: 1.3rem;
-            color: #333;
-        }
-        .deal-info h3 a {
-            text-decoration: none;
-            color: #333;
-        }
-        .deal-info h3 a:hover {
-            color: #667eea;
-        }
-        .deal-subtitle {
-            color: #666;
-            font-size: 0.9rem;
-            margin: 0 0 10px 0;
-        }
-        .deal-description {
-            color: #555;
-            line-height: 1.5;
-            margin: 0;
-        }
-        .deal-meta {
-            display: flex;
-            gap: 15px;
-            margin-top: 10px;
-            font-size: 0.85rem;
-            color: #888;
-        }
-        .deal-meta span {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
     </style>
 </head>
 <body>
@@ -256,16 +272,21 @@
         </div>
     </header>
 
-    <!-- Category Hero Section -->
-    <section class="category-hero" id="category-hero">
+    <!-- Deals Hero Section -->
+    <section class="deals-hero">
         <div class="container">
-            <h1 id="category-title">Deals in: Category</h1>
+            <h1>Save Big on All Deals & Coupon Codes</h1>
         </div>
     </section>
 
-    <!-- Category Content -->
-    <div class="category-content">
+    <!-- Deals Content -->
+    <div class="deals-content">
         <main class="deals-main">
+            <div class="deals-stats">
+                <h2 id="deals-count">Loading...</h2>
+                <p>Software deals and coupon codes available</p>
+            </div>
+            
             <div id="deals-list">
                 <!-- Deals will be loaded here -->
             </div>
@@ -280,6 +301,18 @@
             </div>
         </aside>
     </div>
+
+    <!-- Newsletter Signup -->
+    <section class="newsletter">
+        <div class="container">
+            <h2 class="newsletter-title">Stay updated on sweet deals!</h2>
+            <p class="newsletter-subtitle">You don't want to miss out</p>
+            <div class="newsletter-form">
+                <input type="email" placeholder="Enter your email address" class="email-input" id="email-input">
+                <button class="newsletter-btn" onclick="subscribeNewsletter()">Give Me Free Stuff</button>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer">
@@ -348,7 +381,7 @@
             }
         });
     </script>
-    <script src="/category.js"></script>
+    <script src="/deals-script.js"></script>
 
 </body>
 </html>

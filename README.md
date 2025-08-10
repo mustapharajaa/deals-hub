@@ -7,7 +7,8 @@ A professional, SEO-optimized coupon website with a full-featured admin dashboar
 - **Backend**: Node.js, Express.js
 - **Database**: SQLite
 - **Frontend**: HTML, CSS, Vanilla JavaScript
-- **Key Libraries**: `sqlite3` for database access, `express` for the server.
+- **Search Automation**: Puppeteer, Google Gemini AI
+- **Key Libraries**: `sqlite3` for database access, `express` for the server, `puppeteer-extra` for web scraping, `@google/generative-ai` for AI analysis.
 
 ## 📁 File Structure
 
@@ -22,6 +23,14 @@ SEO-DYNAMIC/
 ├── init-database.js    # Script to initialize the database schema
 ├── styles.css          # Shared CSS for all pages
 ├── package.json        # Project dependencies and scripts
+├── search/             # Search automation system
+│   ├── serche-data.js          # Main search automation script
+│   ├── automated-scheduler.js  # Scheduled automation runner
+│   ├── gemini-analyzer.js      # AI content analysis engine
+│   ├── scheduler-config.json   # Automation configuration
+│   ├── new softwers.txt        # Queue of software to process
+│   ├── GEMINI-SETUP.md         # AI setup instructions
+│   └── processed-results/      # Scraped content storage
 └── README.md           # This documentation
 ```
 
@@ -96,3 +105,161 @@ Once a deal is added, it is instantly available on the live site at two SEO-frie
 For example, a deal for "TaskMagic" can be viewed at `http://localhost:3000/deal/taskmagic`.
 
 You can also click the blue **View** button next to any deal in the dashboard to open its live page in a new tab.
+
+## 🤖 Search Automation System
+
+The project includes a powerful automated search and content generation system that can automatically discover, analyze, and add new software deals to your database using AI-powered web scraping.
+
+### 🔍 How Search Automation Works
+
+The search automation system consists of three main components:
+
+1. **Web Scraping Engine** (`serche-data.js`)
+   - Uses ultra-stealth Puppeteer to bypass detection
+   - Searches Google for software + "coupon code" queries
+   - Scrapes top 3 search results for comprehensive data
+   - Extracts deal information, pricing, and content
+
+2. **AI Content Analyzer** (`gemini-analyzer.js`)
+   - Powered by Google Gemini AI
+   - Analyzes scraped content for SEO insights
+   - Generates professional descriptions and categories
+   - Extracts logos, pricing, and deal details
+   - Creates comprehensive "About" sections
+
+3. **Continuous Monitoring** (`automated-scheduler.js`)
+   - Monitors configuration and software queue
+   - Processes software with configurable delays
+   - Automatically manages the automation lifecycle
+   - Provides real-time enable/disable control
+
+### ⚙️ Configuration
+
+All automation settings are controlled via `search/scheduler-config.json`:
+
+```json
+{
+  "enabled": true,
+  "searchIntervalMonths": 1,
+  "minDelayMinutes": 20,
+  "maxDelayMinutes": 120,
+  "newSoftware": {
+    "minDelayMinutes": 2,
+    "maxDelayMinutes": 3,
+    "sourceFile": "./new softwers.txt",
+    "searchKeywords": ["coupon code", "discount", "promo code"]
+  }
+}
+```
+
+**Key Settings:**
+- `enabled`: Master ON/OFF switch for all automation
+- `newSoftware.minDelayMinutes/maxDelayMinutes`: Random delay between processing each software
+- `searchKeywords`: Keywords to append to software names during search
+- `sourceFile`: Text file containing software names to process
+
+### 🚀 Running Search Automation
+
+#### Method 1: Manual Single Run
+```bash
+cd search
+node serche-data.js
+```
+
+#### Method 2: Continuous Monitoring
+The script automatically monitors for:
+- `"enabled": true` in configuration
+- Software entries in `new softwers.txt`
+- Processes all software with configured delays
+- Continues monitoring even when disabled
+
+### 📝 Adding Software to Process
+
+1. **Add software names** to `search/new softwers.txt` (one per line):
+   ```
+   Adobe Photoshop
+   Canva Pro
+   Figma
+   Sketch
+   ```
+
+2. **Configure search keywords** (optional):
+   - Default: Uses first keyword ("coupon code")
+   - Specific: Add `(2)` for second keyword, `(3)` for third
+   - Example: `Adobe Photoshop (2)` → searches "Adobe Photoshop discount"
+
+3. **Enable automation**:
+   ```json
+   {
+     "enabled": true
+   }
+   ```
+
+### 🔄 Automation Workflow
+
+1. **Detection**: Monitors config and software queue every 2-3 minutes
+2. **Search**: Launches stealth browser and searches Google
+3. **Scraping**: Extracts content from top 3 search results
+4. **AI Analysis**: Gemini AI analyzes content and generates data
+5. **Database Update**: Adds software with categories, descriptions, and metadata
+6. **Queue Management**: Removes processed software and continues to next
+7. **Browser Cleanup**: Closes browser after each completion
+8. **Delay**: Waits configured time before processing next software
+
+### 🎛️ Real-Time Control
+
+**Start Automation:**
+- Set `"enabled": true` in `scheduler-config.json`
+- Add software names to `new softwers.txt`
+- Automation starts automatically
+
+**Stop Automation:**
+- Set `"enabled": false` in `scheduler-config.json`
+- Current software completes, then stops
+- Returns to monitoring mode
+
+**Resume Automation:**
+- Set `"enabled": true` again
+- Continues from remaining software in queue
+
+**Adjust Timing:**
+- Change `minDelayMinutes` and `maxDelayMinutes`
+- New delays apply immediately (no restart needed)
+
+### 🛡️ Features
+
+- **Ultra-Stealth**: Bypasses Google detection with advanced techniques
+- **AI-Powered**: Generates professional content using Gemini AI
+- **Real-Time Config**: Change settings without restarting
+- **Persistent Monitoring**: Never stops, just pauses when disabled
+- **Clean Resource Management**: Browsers close after each completion
+- **Comprehensive Data**: Extracts logos, categories, descriptions, pricing
+- **SEO Optimized**: Generates SEO-friendly content and metadata
+- **Error Handling**: Continues processing even if individual items fail
+
+### 📊 What Gets Generated
+
+For each software, the AI automatically creates:
+- **SEO Title & Description**
+- **Professional Categories** (auto-created if new)
+- **Comprehensive About Section** (2000+ characters)
+- **Logo URL** (extracted from official domain)
+- **Pricing Information**
+- **Deal Details & Expiration**
+- **Target Keywords**
+- **User Benefits & Features**
+
+### 🔧 Prerequisites
+
+1. **Google Gemini AI API Key**: Required for content analysis
+   - See `search/GEMINI-SETUP.md` for setup instructions
+
+2. **Node.js Dependencies**: Install automation packages
+   ```bash
+   cd search
+   npm install
+   ```
+
+3. **Chrome/Chromium**: Required for Puppeteer browser automation
+
+The search automation system transforms manual content creation into a fully automated, AI-powered workflow that can process hundreds of software entries with minimal human intervention.

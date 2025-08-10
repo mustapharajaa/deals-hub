@@ -69,6 +69,124 @@
     <link rel="stylesheet" href="/styles.css?v=2">
     <!-- Icons replaced with Unicode symbols for faster loading -->
     
+    <style>
+        /* Admin Panel Styles - Hidden by default */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        .admin-panel.active {
+            display: flex;
+        }
+        .admin-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        /* Contact Popup Styles */
+        .contact-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        .contact-popup.active {
+            display: flex;
+        }
+        .contact-popup-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .contact-popup-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+        .contact-popup-close:hover {
+            color: #000;
+        }
+        .contact-form {
+            margin-bottom: 20px;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .contact-form textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        .contact-submit-btn {
+            background: #00D4AA;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .contact-submit-btn:hover {
+            background: #00B894;
+        }
+        .contact-info {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .contact-info h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .contact-info p {
+            margin: 8px 0;
+            color: #666;
+        }
+        .contact-info a {
+            color: #00D4AA;
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    
     <!-- Structured Data for SEO -->
     <script type="application/ld+json">
     {
@@ -115,11 +233,11 @@
                 <h2>DealHub</h2>
             </div>
             <nav class="nav">
-                <a href="#deals">All Deals</a>
-                <a href="#blog">Blog</a>
-                <a href="#faq">FAQ</a>
-                <a href="#hire">Hire Us</a>
-                <a href="#contact">Contact Us</a>
+                <a href="/deals">All Deals</a>
+                <a href="/blog">Blog</a>
+                <a href="/faq">FAQ</a>
+                <a href="/hire-us">Hire Us</a>
+                <a href="#" onclick="openContactPopup()">Contact Us</a>
             </nav>
             <div class="social-icons">
                 <a href="#"><img src="/images/facebook.png" alt="Facebook" style="width: 24px; height: 24px;"></a>
@@ -316,7 +434,142 @@
         ⚙️
     </button>
 
+    <!-- Contact Popup Modal -->
+    <div class="contact-popup" id="contact-popup">
+        <div class="contact-popup-content">
+            <button class="contact-popup-close" onclick="closeContactPopup()">&times;</button>
+            <h2>Contact Deal Hub</h2>
+            
+            <form class="contact-form" onsubmit="submitContactForm(event)">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <input type="text" placeholder="Subject" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <button type="submit" class="contact-submit-btn">Send Message</button>
+            </form>
+            
+            <div class="contact-info">
+                <h3>Get in Touch</h3>
+                <p><strong>Email:</strong> <a href="mailto:hello@dealhub.com">hello@dealhub.com</a></p>
+                <p><strong>Partnership Inquiries:</strong> <a href="mailto:partnerships@dealhub.com">partnerships@dealhub.com</a></p>
+                <p><strong>Response Time:</strong> Within 24 hours</p>
+            </div>
+        </div>
+    </div>
+
     <script src="/app.js"></script>
+    
+    <script>
+        // Contact Popup Functions
+        function openContactPopup() {
+            const popup = document.getElementById('contact-popup');
+            if (popup) {
+                popup.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            }
+        }
+
+        function closeContactPopup() {
+            const popup = document.getElementById('contact-popup');
+            if (popup) {
+                popup.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Restore scrolling
+            }
+        }
+
+        function submitContactForm(event) {
+            event.preventDefault();
+            alert('Thank you for your message! We will get back to you within 24 hours.');
+            event.target.reset();
+            closeContactPopup();
+        }
+
+        // Admin Panel Functions
+        function toggleAdmin() {
+            const adminPanel = document.querySelector('.admin-panel');
+            if (adminPanel) {
+                adminPanel.classList.toggle('active');
+                if (adminPanel.classList.contains('active')) {
+                    document.body.style.overflow = 'hidden';
+                    loadCurrentDealData(); // Load deal data when opening admin panel
+                } else {
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        }
+
+        // Load current deal data into admin form
+        function loadCurrentDealData() {
+            try {
+                // Get current deal data from the page elements
+                const softwareName = document.getElementById('software-name')?.textContent || 
+                                   document.querySelector('h1')?.textContent || '';
+                const softwareLogo = document.getElementById('software-logo')?.src || '';
+                const websiteUrl = document.querySelector('.get-deal-btn')?.getAttribute('data-url') || '';
+                const discount = document.getElementById('discount-display')?.textContent || 
+                               document.querySelector('.tag.discount')?.textContent || '';
+                const timeLimit = document.getElementById('time-limit')?.textContent || 
+                                document.querySelector('.tag.limited-time')?.textContent || '';
+                const description = document.getElementById('software-description')?.textContent || '';
+                const category = document.getElementById('software-category')?.textContent || '';
+                const couponCode = document.getElementById('coupon-code-display')?.textContent || '';
+
+                // Populate admin form fields
+                const adminSoftwareName = document.getElementById('admin-software-name');
+                const adminLogoUrl = document.getElementById('admin-logo-url');
+                const adminWebsiteUrl = document.getElementById('admin-website-url');
+                const adminDiscount = document.getElementById('admin-discount');
+                const adminTimeLimit = document.getElementById('admin-time-limit');
+                const adminDescription = document.getElementById('admin-description');
+                const adminCouponCode = document.getElementById('admin-coupon-code');
+
+                if (adminSoftwareName) adminSoftwareName.value = softwareName.replace(/\s+/g, ' ').trim();
+                if (adminLogoUrl) adminLogoUrl.value = softwareLogo;
+                if (adminWebsiteUrl) adminWebsiteUrl.value = websiteUrl;
+                if (adminDiscount) adminDiscount.value = discount.replace(/\s+/g, ' ').trim();
+                if (adminTimeLimit) adminTimeLimit.value = timeLimit.replace(/\s+/g, ' ').trim();
+                if (adminDescription) adminDescription.value = description.replace(/\s+/g, ' ').trim();
+                if (adminCouponCode) adminCouponCode.value = couponCode.replace(/\s+/g, ' ').trim();
+
+                // Set category dropdown if it exists
+                const adminCategory = document.getElementById('admin-category');
+                if (adminCategory && category) {
+                    // Try to find matching category option
+                    const options = adminCategory.options;
+                    for (let i = 0; i < options.length; i++) {
+                        if (options[i].text.toLowerCase() === category.toLowerCase()) {
+                            adminCategory.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+
+                console.log('Deal data loaded into admin form:', {
+                    softwareName,
+                    discount,
+                    category,
+                    timeLimit
+                });
+            } catch (error) {
+                console.error('Error loading deal data:', error);
+            }
+        }
+
+        // Close popups when clicking outside
+        document.addEventListener('click', function(event) {
+            // Close contact popup when clicking outside
+            const contactPopup = document.getElementById('contact-popup');
+            if (contactPopup && event.target === contactPopup) {
+                closeContactPopup();
+            }
+            
+            // Close admin panel when clicking outside
+            const adminPanel = document.querySelector('.admin-panel');
+            if (adminPanel && event.target === adminPanel) {
+                toggleAdmin();
+            }
+        });
+    </script>
     
     <!-- Enhanced Social Sharing (Syrup-inspired) -->
     <script>

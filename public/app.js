@@ -485,8 +485,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const viewWebsiteBtn = document.getElementById('view-website');
     if (viewWebsiteBtn) {
         viewWebsiteBtn.addEventListener('click', function() {
-            // Track the click in analytics
-            trackClick('view');
+            // Track the click in analytics (same as Get Deal button)
+            trackClick('click');
             
             const websiteUrl = getCurrentDealWebsiteUrl();
             if (websiteUrl) {
@@ -534,9 +534,33 @@ async function trackClick(action) {
     }
 }
 
-// Admin panel functions
+// Contact popup functions
+function openContactPopup() {
+    document.getElementById('contact-popup').classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
 
-// Fetches categories and populates the admin dropdown
+function closeContactPopup() {
+    document.getElementById('contact-popup').classList.remove('active');
+    document.body.style.overflow = 'auto'; // Restore scrolling
+}
+
+function submitContactForm(event) {
+    event.preventDefault();
+    alert('Thank you for your message! We\'ll get back to you within 24 hours.');
+    closeContactPopup();
+    event.target.reset(); // Clear form
+}
+
+// Close popup when clicking outside
+document.addEventListener('click', (e) => {
+    const popup = document.getElementById('contact-popup');
+    if (e.target === popup) {
+        closeContactPopup();
+    }
+});
+
+// Admin panel functions
 async function populateCategoryDropdown() {
     try {
         const response = await fetch('/api/all-categories');
