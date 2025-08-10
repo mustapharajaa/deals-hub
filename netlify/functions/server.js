@@ -354,12 +354,58 @@ app.get('/api/deal/:softwareSlug', async (req, res) => {
     }
 });
 
-// Catch all route
+// Catch all route - return 404 for unknown routes
 app.get('*', async (req, res) => {
     try {
         await initDatabase(); // Ensure database is initialized
-        const indexPath = path.join(process.cwd(), 'public', 'index.html');
-        res.sendFile(indexPath);
+        
+        // Generate 404 page HTML
+        const html = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - DealHub</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f8f9fa; }
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; text-align: center; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px 0; }
+        .nav { display: flex; gap: 20px; align-items: center; justify-content: center; }
+        .nav a { color: white; text-decoration: none; padding: 10px 15px; }
+        .error-content { padding: 60px 0; }
+        .error-code { font-size: 72px; font-weight: bold; color: #667eea; margin-bottom: 20px; }
+        .error-message { font-size: 24px; margin-bottom: 30px; color: #333; }
+        .back-btn { background: #00D4AA; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav">
+            <h2>DealHub</h2>
+            <a href="/">Home</a>
+            <a href="/deals">All Deals</a>
+            <a href="/blog">Blog</a>
+            <a href="/faq">FAQ</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="error-content">
+            <div class="error-code">404</div>
+            <div class="error-message">Page Not Found</div>
+            <p>The page you're looking for doesn't exist.</p>
+            <a href="/" class="back-btn">Back to Home</a>
+        </div>
+    </div>
+
+    <footer style="background: #333; color: white; text-align: center; padding: 20px; margin-top: 40px;">
+        <p>&copy; 2024 DealHub. All rights reserved.</p>
+    </footer>
+</body>
+</html>`;
+        
+        res.status(404).send(html);
     } catch (error) {
         console.error('Error in catch-all route:', error);
         res.status(500).send('Error loading page');
@@ -367,4 +413,5 @@ app.get('*', async (req, res) => {
 });
 
 module.exports.handler = serverless(app);
+
 
